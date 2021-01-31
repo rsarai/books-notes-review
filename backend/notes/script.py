@@ -1,5 +1,3 @@
-from notes.models import Highlight
-
 DEFAULT_KINDLE_PATH = "/media/sarai/Kindle/documents/My Clippings.txt"
 SEPARATOR = "=========="
 
@@ -45,9 +43,7 @@ def get_highlights(kindle_path=DEFAULT_KINDLE_PATH):
             })
             line = f.readline()
 
-            if len(content) == 5:
-                break
-    print(content)
+    print(len(content))
     return content
 
 
