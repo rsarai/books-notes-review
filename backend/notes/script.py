@@ -1,3 +1,5 @@
+from notes.models import Highlight
+
 DEFAULT_KINDLE_PATH = "/media/sarai/Kindle/documents/My Clippings.txt"
 SEPARATOR = "=========="
 
@@ -8,6 +10,9 @@ def get_formated_title(title):
 
 
 def get_highlights(kindle_path=DEFAULT_KINDLE_PATH):
+    """
+        IMPORTANT: this is not idempotent. Need to fix this before further imports
+    """
     content = []
     with open(kindle_path, encoding='utf-8-sig') as f:
         line = f.readline()
@@ -31,6 +36,7 @@ def get_highlights(kindle_path=DEFAULT_KINDLE_PATH):
 
                     if SEPARATOR in _tmp_line:
                         continue
+
                     inner_content.append(_tmp_line.strip())
 
             content.append({

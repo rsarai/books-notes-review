@@ -47,7 +47,7 @@
     {
       "plan": "heroku-redis:hobby-dev",
       "options": {
-        "version": "5.0"
+        "version": "6.0"
       },
       "as": "REDIS"
     },
