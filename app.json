@@ -19,7 +19,7 @@
     },
     "DJANGO_SETTINGS_MODULE": {
       "description": "Django settings Python import path",
-      "value": "gait_analisys_app.settings.production"
+      "value": "book_notes_review.settings.production"
     },
     "SECRET_KEY": {
       "description": "Django SECRET_KEY setting",
