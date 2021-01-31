@@ -1,0 +1,30 @@
+// Responsive mixins
+@mixin mobile-only {
+    @include media-breakpoint-down(sm) {
+      @content;
+    }
+  }
+
+  @mixin tablet-sm {
+    @include media-breakpoint-up(sm) {
+      @content;
+    }
+  }
+
+  @mixin tablet {
+    @include media-breakpoint-up(md) {
+      @content;
+    }
+  }
+
+  @mixin desktop-md {
+    @include media-breakpoint-up(lg) {
+      @content;
+    }
+  }
+
+  @mixin desktop-lg {
+    @include media-breakpoint-up(xxl) {
+      @content;
+    }
+  }

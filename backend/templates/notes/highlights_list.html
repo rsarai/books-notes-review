@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="page-content">
+    <div class="header"><h3>Highlights</h3></div>
+    <div class="main-content">
+        <div class="container">
+            {% for highlight in highlights_list %}
+                <div class="highlight-card">
+                    <div class="header-card">
+                        {{ highlight.book }}
+                    </div>
+                    {{ highlight.content }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

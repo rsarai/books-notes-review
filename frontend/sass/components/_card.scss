@@ -1,0 +1,13 @@
+.highlight-card {
+    min-height: 85px;
+    padding: 35px 45px;
+    background-color: white;
+    margin: 30px;
+    box-shadow: 2px 2px 5px $iron_gray;
+}
+
+.highlight-card > .header-card {
+    color: $cod_gray_black;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
