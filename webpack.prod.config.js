@@ -9,7 +9,7 @@ const baseConfig = require('./webpack.base.config');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 
 baseConfig.mode = 'production';
-baseConfig.devtool = 'source-map';
+// baseConfig.devtool = 'source-map';
 
 baseConfig.entry = ['whatwg-fetch', '@babel/polyfill', './frontend/js/index.js'];
 
