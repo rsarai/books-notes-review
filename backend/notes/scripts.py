@@ -2,6 +2,21 @@ DEFAULT_KINDLE_PATH = "/media/sarai/Kindle/documents/My Clippings.txt"
 SEPARATOR = "=========="
 
 
+def example_script_on_how_to_use_api():
+    import json
+    import requests
+    from notes import scripts
+
+    content = scripts.get_highlights(
+        kindle_path="kindle/My Clippings (short).txt"
+    )
+
+    url = "http://127.0.0.1:8000/api/importer/"
+    r = requests.post(url, json=content, auth=('admin@admin.com', '123'))
+    print(r.status_code)
+    print(r.__dict__)
+
+
 def get_formated_title(title):
     title = title.replace(u'\ufeff', '')
     return title.rstrip()
