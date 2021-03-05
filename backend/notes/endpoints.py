@@ -32,7 +32,6 @@ class HighlightRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVie
 class BookListAPIView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    pagination_class = HighlightsPagination
 
 
 class BookDetailAPIView(generics.RetrieveAPIView):
