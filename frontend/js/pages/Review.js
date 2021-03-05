@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { omit } from 'lodash';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import axios from '../utils/axios';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
 import EditHighlight from 'components/EditHighlight';
@@ -9,9 +9,9 @@ import SvgEdit from '../constants/Icons/Edit';
 import SvgTag from '../constants/Icons/Tag';
 import SvgFullFavorite from '../constants/Icons/FullFavorite';
 import SvgDelete from '../constants/Icons/Delete';
-import { omit } from 'lodash';
+import axios from '../utils/axios';
 
-function Content(props) {
+export function Content(props) {
   const highlight = props.highlight;
   return (
     <>
@@ -39,6 +39,20 @@ function Favorite({ highlight }) {
   );
 }
 
+export function HighlightCard({ highlight, setHighlightId, setDeleteHighlightId }) {
+  return (
+    <div key={`highlight-${highlight.id}`} className="highlight-card">
+      <Content highlight={highlight} />
+      <HighlightButtons>
+        <SvgEdit width="18px" height="18px" onClick={() => setHighlightId(highlight.id)} />
+        <Favorite highlight={highlight} />
+        <SvgTag width="18px" height="18px" />
+        <SvgDelete width="18px" height="18px" onClick={() => setDeleteHighlightId(highlight.id)} />
+      </HighlightButtons>
+    </div>
+  );
+}
+
 function Highlights({ setHighlightId, setDeleteHighlightId }) {
   const { status, data, error } = useQuery('highlights', () =>
     fetch('/api/highlights/?limit=5').then((res) => res.json())
@@ -53,19 +67,11 @@ function Highlights({ setHighlightId, setDeleteHighlightId }) {
       ) : (
         <>
           {data.results.map((highlight) => (
-            <div key={`highlight-${highlight.id}`} className="highlight-card">
-              <Content highlight={highlight} />
-              <HighlightButtons>
-                <SvgEdit width="18px" height="18px" onClick={() => setHighlightId(highlight.id)} />
-                <Favorite highlight={highlight} />
-                <SvgTag width="18px" height="18px" />
-                <SvgDelete
-                  width="18px"
-                  height="18px"
-                  onClick={() => setDeleteHighlightId(highlight.id)}
-                />
-              </HighlightButtons>
-            </div>
+            <HighlightCard
+              highlight={highlight}
+              setHighlightId={setHighlightId}
+              setDeleteHighlightId={setDeleteHighlightId}
+            />
           ))}
         </>
       )}

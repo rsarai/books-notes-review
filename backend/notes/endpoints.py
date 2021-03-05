@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import LimitOffsetPagination
 
-from notes.models import Highlight
-from notes.serializers import HighlightListSerializer, HighlightSerializer
+from notes.models import Highlight, Book
+from notes.serializers import HighlightListSerializer, HighlightSerializer, BookSerializer, BookDetailSerializer
 
 
 class HighlightsPagination(LimitOffsetPagination):
@@ -27,3 +27,15 @@ class HighlightRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVie
     queryset = Highlight.objects.all()
     serializer_class = HighlightSerializer
     permission_classes = [IsAdminUser]
+
+
+class BookListAPIView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    pagination_class = HighlightsPagination
+
+
+class BookDetailAPIView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookDetailSerializer
+

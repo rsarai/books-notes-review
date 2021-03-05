@@ -50,8 +50,6 @@ jobs:
 
       - run:
           command: npm run build
-      - run:
-          command: npm run lint
     #   # security checks
       - run:
           command: bandit -r .

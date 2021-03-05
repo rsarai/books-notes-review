@@ -10,10 +10,18 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+    highlights_count = serializers.SerializerMethodField(read_only=True)
+    created = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Book
-        fields = ['id', 'name', 'author']
+        fields = ['id', 'name', 'author', 'highlights_count', 'created']
+
+    def get_highlights_count(self, obj):
+        return obj.highlights.count()
+
+    def get_created(self, obj):
+        return obj.created
 
 
 class HighlightSerializer(serializers.ModelSerializer):
@@ -49,3 +57,11 @@ class HighlightListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
         result = [self.child.create(attrs) for attrs in validated_data]
         return result
+
+
+class BookDetailSerializer(serializers.ModelSerializer):
+    highlights = HighlightListSerializer()
+
+    class Meta:
+        model = Book
+        fields = ['id', 'name', 'author', 'highlights']
