@@ -6,4 +6,5 @@ app_name = 'notes'
 urlpatterns = [
     path('', views.ListHighlights.as_view(), name='list'),
     path("review/", views.ActiveReview.as_view(), name="active_review"),
+    # path("books/", views.BookListView.as_view(), name="active_review"),
 ]

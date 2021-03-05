@@ -6,7 +6,7 @@ import Card from '../components/card';
 
 const Home = () => {
   const [reload, setReload] = useState(false);
-  const { isLoading, isError, data, error } = useQuery('hightlights', () =>
+  const { isLoading, isError, data, error } = useQuery('highlights', () =>
     fetch('/api/highlights/?limit=5').then((res) => res.json())
   );
 

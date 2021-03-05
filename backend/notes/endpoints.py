@@ -6,7 +6,7 @@ from notes.models import Highlight
 from notes.serializers import HighlightListSerializer, HighlightSerializer
 
 
-class HightlightsPagination(LimitOffsetPagination):
+class HighlightsPagination(LimitOffsetPagination):
     default_limit = 10
     max_limit = 500
 
@@ -20,7 +20,7 @@ class APIHighlightCreate(generics.CreateAPIView):
 class HighlighListCreateAPIView(generics.ListAPIView):
     queryset = Highlight.objects.all()
     serializer_class = HighlightSerializer
-    pagination_class = HightlightsPagination
+    pagination_class = HighlightsPagination
 
 
 class HighlightRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):

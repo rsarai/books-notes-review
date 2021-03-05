@@ -14,6 +14,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path("highlights/", include("notes.urls"), name="notes"),
 
-    path('api/importer/', endpoints.APIHighlightCreate.as_view()),
     path('api/highlights/', include("notes.endpoints_urls")),
+
+    # importer only available to me
+    path('api/importer/', endpoints.APIHighlightCreate.as_view()),
 ]
