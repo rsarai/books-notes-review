@@ -1,6 +1,7 @@
-import { get } from 'lodash';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import Spinner from 'react-bootstrap/Spinner';
+import { get } from 'lodash';
 
 import Card from '../components/card';
 
@@ -11,7 +12,11 @@ const Home = () => {
   );
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Spinner animation="border" size="md" role="status" aria-hidden="true" />
+      </div>
+    );
   }
 
   if (isError) {

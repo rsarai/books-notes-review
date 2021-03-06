@@ -2,9 +2,11 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ReviewCards from './pages/Review';
-import { BookList, BookDetail } from './pages/Books';
+import { BookList } from './pages/Books';
+import { BookDetail } from './pages/BookDetail';
 
 const queryClient = new QueryClient();
 const App = () => (

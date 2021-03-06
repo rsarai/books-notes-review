@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { omit } from 'lodash';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import Spinner from 'react-bootstrap/Spinner';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
 import EditHighlight from 'components/EditHighlight';
@@ -61,7 +62,9 @@ function Highlights({ setHighlightId, setDeleteHighlightId }) {
   return (
     <div>
       {status === 'loading' ? (
-        'Loading...'
+        <div style={{ textAlign: 'center' }}>
+          <Spinner animation="border" size="md" role="status" aria-hidden="true" />
+        </div>
       ) : status === 'error' ? (
         <span>Error: {error.message}</span>
       ) : (
