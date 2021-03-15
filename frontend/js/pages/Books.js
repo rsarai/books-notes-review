@@ -30,7 +30,7 @@ export function BookList() {
       <br></br>
       <br></br>
       <h1>Library</h1>
-      <img src="/static/check.png" alt="" />
+      <img src="/staticfiles/check.png" alt="" />
       <br></br>
       <BookRow>
         <Col>Title</Col>
