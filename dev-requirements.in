@@ -6,5 +6,4 @@ django-naomi
 isort
 model-bakery
 pre-commit
-prospector[with-vulture]
 safety
