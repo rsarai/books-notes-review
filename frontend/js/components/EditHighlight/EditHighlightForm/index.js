@@ -1,49 +1,95 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import { omit } from 'lodash';
+import { get, map, omit } from 'lodash';
 
-import axios from '../../../utils/axios';
-import { Form, Input, Button, Text } from './style';
+import { useMutationEditHighlight } from 'hooks/useHighlight';
+import { Form, Input, Button, Text, SidePanel, FieldsContainer } from './style';
 
 let contentSchema = yup.object().shape({
   content: yup.string().required(),
 });
 
-const EditHighlightForm = ({ highlight, setIsEditing }) => {
-  const queryClient = useQueryClient();
+const EditHighlightForm = ({ highlight }) => {
+  const { mutateAsync: updateContentMutation } = useMutationEditHighlight();
 
-  const updateContentMutation = useMutation(
-    (values) => axios.put(`/api/highlights/${values.id}/`, omit(values, ['books'])),
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries('highlights');
-        setIsEditing(false);
-      },
-    }
-  );
   return (
-    <Formik initialValues={highlight} validationSchema={contentSchema}>
-      {({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
+    <Formik
+      initialValues={{
+        ...omit(highlight, ['book', 'notes']),
+        notes: '',
+      }}
+      enableReinitialize
+      validationSchema={contentSchema}
+      onSubmit={async (values, { resetForm }) => {
+        try {
+          await updateContentMutation({ payload: values });
+          resetForm({ notes: '' });
+        } catch (error) {
+          const errorData = get(error, 'response.data');
+          if (errorData) {
+            actions.setErrors(errorData);
+            map(errorData, (error) => {
+              toast(error, { type: toast.TYPE.ERROR });
+            });
+          } else {
+            toast('Something went wrong!', { type: toast.TYPE.ERROR });
+          }
+        }
+      }}
+    >
+      {({ values, errors, touched, isSubmitting, handleSubmit, handleBlur, handleChange }) => (
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            updateContentMutation.mutate(values);
+            handleSubmit();
           }}
         >
-          <Input
-            type="content"
-            name="content"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.content}
-            len={values.content.length < 200 ? 50 : Math.floor(values.content.length / 4)}
-          />
-          {errors.content && touched.content && <Text color="red">{errors.content}</Text>}
-          {updateContentMutation.isError ? <Text color="red">An error occurred</Text> : null}
+          <FieldsContainer>
+            <SidePanel>
+              <label>Edit Content</label>
+              <Input
+                name="content"
+                value={values.content}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="text-input"
+                len={values.content.length < 200 ? 150 : values.content.length}
+              />
+              {errors.content && touched.content && <Text color="red">{errors.content}</Text>}
+            </SidePanel>
+            <SidePanel>
+              <label>Current notes</label>
+              <div className="notes">
+                <ul>
+                  {map(highlight.notes, (note) => {
+                    return <li>{note.content}</li>;
+                  })}
+                </ul>
+              </div>
+              <Input
+                name="notes"
+                className="text-input"
+                placeholder="Create notes..."
+                onChange={handleChange}
+                onBlur={handleBlur}
+                style={{ borderRadius: '10px' }}
+              />
+              {errors.notes && touched.notes
+                ? map(get(errors, 'notes'), (error) => {
+                    return <Text color="red">{get(error, 'non_field_errors')}</Text>;
+                  })
+                : null}
+              {errors.notes && touched.notes
+                ? map(get(get(errors, 'notes')[0], 'content'), (error) => {
+                    return <Text color="red">{error}</Text>;
+                  })
+                : null}
+            </SidePanel>
+          </FieldsContainer>
           <div style={{ display: 'flex' }}>
-            <Button onClick={() => setIsEditing(false)}>Back</Button>
             <Button type="submit" disabled={isSubmitting}>
               Submit
             </Button>

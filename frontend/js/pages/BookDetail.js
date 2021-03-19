@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { get, map } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { Content } from 'pages/Review';
+import { Content } from 'components/Highlights';
 import { useBookDetail } from 'hooks/useBooks';
 
 export function BookDetail() {

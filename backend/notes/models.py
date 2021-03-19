@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from common.models import IndexedTimeStampedModel
 from model_utils import Choices
+from django_random_queryset import RandomManager
 
 class Tag(IndexedTimeStampedModel):
     name = models.CharField(max_length=255)
@@ -30,6 +31,7 @@ RETRIEVAL_FREQUENCY = Choices(
 
 
 class Highlight(IndexedTimeStampedModel):
+    objects = RandomManager()
     book = models.ForeignKey(
         Book, related_name="highlights", on_delete=models.CASCADE
     )
@@ -52,10 +54,10 @@ class Highlight(IndexedTimeStampedModel):
 class Note(IndexedTimeStampedModel):
     content = models.TextField()
     book = models.ForeignKey(
-        Book, related_name="notes", on_delete=models.CASCADE, blank=True
+        Book, related_name="notes", on_delete=models.CASCADE, blank=True, null=True
     )
     highlight = models.ForeignKey(
-        Highlight, related_name="notes", on_delete=models.CASCADE, blank=True
+        Highlight, related_name="notes", on_delete=models.CASCADE, blank=True, null=True
     )
 
     def __str__(self):
