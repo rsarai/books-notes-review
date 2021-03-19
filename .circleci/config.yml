@@ -54,8 +54,8 @@ jobs:
       # - run:
       #     command: bandit -r .
       # imports check
-      - run:
-          command: isort **/*.py --check-only
+      # - run:
+      #     command: isort **/*.py --check-only
       - run:
           command: (cd backend; python manage.py has_missing_migrations --ignore authtools)
           environment:
