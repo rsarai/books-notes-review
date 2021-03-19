@@ -33,6 +33,9 @@ export function HighlightCard({ highlight, setHighlightId, setDeleteHighlightId 
     <div key={`highlight-${highlight.id}`} className="highlight-card">
       <Content highlight={highlight} />
       <HighlightButtons>
+        <div style={{ color: '#61605c', fontSize: '13px', marginRight: '15px' }}>
+          Notes: {highlight.notes.length}
+        </div>
         <Link to={`/highlights/review/${highlight.id}`}>
           <SvgEdit width="18px" height="18px" />
         </Link>

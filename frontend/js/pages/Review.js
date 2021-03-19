@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { useQueryClient } from 'react-query';
+import styled from 'styled-components';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
 import { HighlightCard } from 'components/Highlights';
 import { useRandomHighlight } from 'hooks/useHighlight';
+
+const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  color: #5e8ccd;
+  padding-right: 30px;
+  cursor: pointer;
+  width: 500px;
+`;
 
 function ReviewContainer({ highlight }) {
   const [highlightId, setHighlightId] = useState(-1);
@@ -43,20 +53,21 @@ function ReviewRandomCards() {
   return (
     <div style={{ maxWidth: '1156px', margin: 'auto' }}>
       <ReviewContainer highlight={data} />
-      <div
-        style={{
-          textAlign: 'right',
-          color: '#5e8ccd',
-          paddingRight: '30px',
-          margin: '30px',
-          cursor: 'pointer',
-        }}
-        onClick={() => {
-          refetch();
-        }}
-      >
-        Next
-      </div>
+      <Footer>
+        <div>Discard</div>
+        {/* <div>never</div>
+        <div>soon</div>
+        <div>later</div>
+        <div>someday</div>
+        <div>surprise</div> */}
+        <div
+          onClick={() => {
+            refetch();
+          }}
+        >
+          Keep
+        </div>
+      </Footer>
     </div>
   );
 }

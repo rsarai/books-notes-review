@@ -51,7 +51,6 @@ export function ReviewEditHighlight() {
 
   return (
     <div style={{ maxWidth: '1156px', margin: 'auto' }}>
-      <Link to="/highlights/review">Back</Link>
       {status === 'loading' ? (
         <div style={{ textAlign: 'center' }}>
           <Spinner animation="border" size="md" role="status" aria-hidden="true" />
@@ -60,7 +59,11 @@ export function ReviewEditHighlight() {
         <span>Error: {error.message}</span>
       ) : (
         <>
-          <h1>{highlight.book.name}</h1>
+          <div style={{ textAlign: 'right', marginRight: '120px' }}>
+            <Link to="/highlights/review">Back</Link>
+          </div>
+          <h2 style={{ textAlign: 'center' }}>{highlight.book.name}</h2>
+          <br></br>
           <EditHighlightForm highlight={highlight} />
         </>
       )}
