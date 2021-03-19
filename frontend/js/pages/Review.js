@@ -1,105 +1,75 @@
 import React, { useState } from 'react';
-import { omit } from 'lodash';
-import { useQuery, useMutation } from 'react-query';
-import Spinner from 'react-bootstrap/Spinner';
+import styled from 'styled-components';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
-import EditHighlight from 'components/EditHighlight';
-import { HighlightButtons } from '../components/card/style';
-import SvgEdit from '../constants/Icons/Edit';
-import SvgTag from '../constants/Icons/Tag';
-import SvgFullFavorite from '../constants/Icons/FullFavorite';
-import SvgDelete from '../constants/Icons/Delete';
-import axios from '../utils/axios';
+import { HighlightCard } from 'components/Highlights';
+import { useRandomHighlight } from 'hooks/useHighlight';
 
-export function Content(props) {
-  const highlight = props.highlight;
-  return (
-    <>
-      <div className="header-card">{highlight.book.name}</div>
-      {highlight.content}
-    </>
-  );
-}
+const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  color: #5e8ccd;
+  padding-right: 30px;
+  cursor: pointer;
+  width: 500px;
+`;
 
-function Favorite({ highlight }) {
-  const favoriteMutation = useMutation((values) => {
-    values.favorite = !values.favorite;
-    axios.put(`/api/highlights/${values.id}/`, omit(values, ['books']));
-  });
-  return (
-    <SvgFullFavorite
-      width="18px"
-      height="18px"
-      fill={highlight.favorite ? 'red' : 'none'}
-      stroke={highlight.favorite ? 'red' : 'black'}
-      onClick={() => {
-        favoriteMutation.mutate(highlight);
-      }}
-    />
-  );
-}
-
-export function HighlightCard({ highlight, setHighlightId, setDeleteHighlightId }) {
-  return (
-    <div key={`highlight-${highlight.id}`} className="highlight-card">
-      <Content highlight={highlight} />
-      <HighlightButtons>
-        <SvgEdit width="18px" height="18px" onClick={() => setHighlightId(highlight.id)} />
-        <Favorite highlight={highlight} />
-        <SvgTag width="18px" height="18px" />
-        <SvgDelete width="18px" height="18px" onClick={() => setDeleteHighlightId(highlight.id)} />
-      </HighlightButtons>
-    </div>
-  );
-}
-
-function Highlights({ setHighlightId, setDeleteHighlightId }) {
-  const { status, data, error } = useQuery('highlights', () =>
-    fetch('/api/highlights/?limit=5').then((res) => res.json())
-  );
-
-  return (
-    <div>
-      {status === 'loading' ? (
-        <div style={{ textAlign: 'center' }}>
-          <Spinner animation="border" size="md" role="status" aria-hidden="true" />
-        </div>
-      ) : status === 'error' ? (
-        <span>Error: {error.message}</span>
-      ) : (
-        <>
-          {data.results.map((highlight) => (
-            <HighlightCard
-              highlight={highlight}
-              setHighlightId={setHighlightId}
-              setDeleteHighlightId={setDeleteHighlightId}
-            />
-          ))}
-        </>
-      )}
-    </div>
-  );
-}
-
-function ReviewCards() {
+function ReviewContainer({ highlight }) {
   const [highlightId, setHighlightId] = useState(-1);
   const [deleteHighlightId, setDeleteHighlightId] = useState(-1);
 
   return (
-    <div style={{ maxWidth: '1156px', margin: 'auto' }}>
-      {highlightId && highlightId > -1 ? (
-        <EditHighlight highlightId={highlightId} setHighlightId={setHighlightId} />
-      ) : deleteHighlightId > -1 ? (
+    <>
+      {deleteHighlightId > -1 ? (
         <DeleteHighlightPanel
           deleteHighlightId={deleteHighlightId}
           setDeleteHighlightId={setDeleteHighlightId}
         />
       ) : (
-        <Highlights setHighlightId={setHighlightId} setDeleteHighlightId={setDeleteHighlightId} />
+        <div>
+          <HighlightCard
+            highlight={highlight}
+            setHighlightId={setHighlightId}
+            setDeleteHighlightId={setDeleteHighlightId}
+          />
+        </div>
       )}
+    </>
+  );
+}
+
+function ReviewRandomCards() {
+  const { status, data, error, refetch } = useRandomHighlight();
+
+  if (status === 'loading') {
+    return null;
+  }
+
+  if (status === error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <div style={{ maxWidth: '1156px', margin: 'auto' }}>
+      <ReviewContainer highlight={data} />
+      <Footer>
+        <div>Discard</div>
+        {/* <div>never</div>
+        <div>soon</div>
+        <div>later</div>
+        <div>someday</div>
+        <div>surprise</div> */}
+        <div
+          onClick={() => {
+            refetch();
+          }}
+        >
+          Keep
+        </div>
+      </Footer>
     </div>
   );
 }
 
-export default ReviewCards;
+export default ReviewRandomCards;

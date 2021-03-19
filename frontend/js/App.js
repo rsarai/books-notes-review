@@ -1,20 +1,27 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
-import ReviewCards from './pages/Review';
+import { ReviewEditHighlight } from 'components/EditHighlight';
+import ReviewRandomCards from './pages/Review';
 import { BookList } from './pages/Books';
 import { BookDetail } from './pages/BookDetail';
 
 const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ToastContainer position="top-center" />
     <Router>
       <Switch>
-        <Route path="/highlights/review">
-          <ReviewCards />
+        <Route path="/highlights/review" exact>
+          <ReviewRandomCards />
+        </Route>
+        <Route path="/highlights/review/:id">
+          <ReviewEditHighlight />
         </Route>
         <Route path="/highlights/books" exact>
           <BookList />

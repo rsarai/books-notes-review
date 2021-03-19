@@ -38,3 +38,6 @@ class BookDetailAPIView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookDetailSerializer
 
+class HighlightRandomRetrieveAPIView(generics.ListAPIView):
+    queryset = Highlight.objects.all().random(1)
+    serializer_class = HighlightSerializer

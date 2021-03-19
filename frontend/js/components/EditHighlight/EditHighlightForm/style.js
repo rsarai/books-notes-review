@@ -28,3 +28,34 @@ export const Button = styled.button`
 export const Text = styled.p`
   color: ${(props) => props.color || '#4d4d4d'};
 `;
+
+export const FieldsContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
+
+export const SidePanel = styled.div`
+  display: flex;
+  padding-left: 15px;
+  flex-direction: column;
+  width: 40%;
+
+  .notes {
+    background-color: white;
+    border: 1px solid #5995ef;
+    height: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    color: #5e8ccd;
+  }
+
+  .text-input {
+    padding: 20px;
+  }
+
+  label {
+    color: #99afce;
+    padding-left: 20px;
+  }
+`;

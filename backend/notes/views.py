@@ -26,6 +26,10 @@ class ActiveReview(generic.TemplateView):
     template_name = "active_review.html"
 
 
+class ActiveDetailView(generic.TemplateView):
+    template_name = "active_review.html"
+
+
 class BookListView(generic.TemplateView):
     template_name = "notes/books_list.html"
 
