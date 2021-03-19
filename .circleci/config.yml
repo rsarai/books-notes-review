@@ -51,8 +51,8 @@ jobs:
       - run:
           command: npm run build
     #   # security checks
-      - run:
-          command: bandit -r .
+      # - run:
+      #     command: bandit -r .
       # imports check
       - run:
           command: isort **/*.py --check-only
