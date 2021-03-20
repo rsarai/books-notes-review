@@ -5,7 +5,7 @@ import axios from '../utils/axios';
 
 export function useRandomHighlight(params = {}) {
   return useQuery(
-    ['highlights-random', params],
+    'highlights-random',
     async () => {
       const { data } = await axios.get('/api/highlights/random/');
       return data[0];

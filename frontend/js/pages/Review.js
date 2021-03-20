@@ -98,13 +98,7 @@ function ReviewRandomCards() {
         >
           surprise
         </div>
-        <div
-          onClick={() => {
-            refetch();
-          }}
-        >
-          Keep
-        </div>
+        <div onClick={() => refetch()}>Keep</div>
       </Footer>
     </div>
   );
