@@ -37,7 +37,7 @@ class HighlightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Highlight
-        fields = ['id', 'content', 'book', 'favorite', 'notes']
+        fields = ['id', 'content', 'book', 'favorite', 'notes', 'should_be_reviewed', 'frequency']
 
     def create(self, validated_data):
         # https://www.django-rest-framework.org/api-guide/serializers/#writing-create-methods-for-nested-representations

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { omit } from 'lodash';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
 import { HighlightCard } from 'components/Highlights';
-import { useRandomHighlight } from 'hooks/useHighlight';
+import { useRandomHighlight, useUpdateContentMutation } from 'hooks/useHighlight';
 
 const Footer = styled.div`
   display: flex;
@@ -41,6 +42,7 @@ function ReviewContainer({ highlight }) {
 
 function ReviewRandomCards() {
   const { status, data, error, refetch } = useRandomHighlight();
+  const { mutateAsync: quickUpdateHighlight } = useUpdateContentMutation();
 
   if (status === 'loading') {
     return null;
@@ -54,12 +56,48 @@ function ReviewRandomCards() {
     <div style={{ maxWidth: '1156px', margin: 'auto' }}>
       <ReviewContainer highlight={data} />
       <Footer>
-        <div>Discard</div>
-        {/* <div>never</div>
-        <div>soon</div>
-        <div>later</div>
-        <div>someday</div>
-        <div>surprise</div> */}
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), should_be_reviewed: false });
+          }}
+        >
+          Discard
+        </div>
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'never' });
+          }}
+        >
+          never
+        </div>
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'soon' });
+          }}
+        >
+          soon
+        </div>
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'later' });
+          }}
+        >
+          later
+        </div>
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'someday' });
+          }}
+        >
+          someday
+        </div>
+        <div
+          onClick={async () => {
+            await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'surprise' });
+          }}
+        >
+          surprise
+        </div>
         <div
           onClick={() => {
             refetch();
