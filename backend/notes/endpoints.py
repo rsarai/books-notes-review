@@ -1,6 +1,12 @@
+import random
+
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import LimitOffsetPagination
+
+from django.db import models, transaction
+from django.db.models import Count, Max, Min
+from django_random_queryset import strategies
 
 from notes.models import Highlight, Book
 from notes.serializers import HighlightListSerializer, HighlightSerializer, BookSerializer, BookDetailSerializer
@@ -39,5 +45,11 @@ class BookDetailAPIView(generics.RetrieveAPIView):
     serializer_class = BookDetailSerializer
 
 class HighlightRandomRetrieveAPIView(generics.ListAPIView):
-    queryset = Highlight.objects.all().random(1)
     serializer_class = HighlightSerializer
+
+    def get_queryset(self):
+        amount = 1
+        with transaction.atomic():
+            selected_ids = Highlight.objects.all().values_list("id", flat=True)
+            random_id = random.sample(list(selected_ids), amount)[0]
+            return [Highlight.objects.get(id=random_id)]
