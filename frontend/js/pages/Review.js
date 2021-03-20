@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { omit } from 'lodash';
+import Spinner from 'react-bootstrap/Spinner';
+import { useToggle } from 'react-use';
+import styled from 'styled-components';
 
 import DeleteHighlightPanel from 'components/DeleteHighlightPanel';
 import { HighlightCard } from 'components/Highlights';
@@ -41,8 +43,10 @@ function ReviewContainer({ highlight }) {
 }
 
 function ReviewRandomCards() {
+  const [isGettingNext, setIsGettingNext] = useToggle(false);
   const { status, data, error, refetch } = useRandomHighlight();
   const { mutateAsync: quickUpdateHighlight } = useUpdateContentMutation();
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   if (status === 'loading') {
     return null;
@@ -54,7 +58,14 @@ function ReviewRandomCards() {
 
   return (
     <div style={{ maxWidth: '1156px', margin: 'auto' }}>
-      <ReviewContainer highlight={data} />
+      {isGettingNext ? (
+        <div style={{ textAlign: 'center', height: '200px' }}>
+          <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+        </div>
+      ) : (
+        <ReviewContainer highlight={data} />
+      )}
+
       <Footer>
         <div
           onClick={async () => {
@@ -98,7 +109,21 @@ function ReviewRandomCards() {
         >
           surprise
         </div>
-        <div onClick={() => refetch()}>Keep</div>
+
+        {isGettingNext ? (
+          <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+        ) : (
+          <div
+            onClick={async () => {
+              setIsGettingNext();
+              await refetch();
+              await delay(500);
+              setIsGettingNext();
+            }}
+          >
+            Keep
+          </div>
+        )}
       </Footer>
     </div>
   );
