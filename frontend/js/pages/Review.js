@@ -74,7 +74,7 @@ function ReviewRandomCards() {
         >
           Discard
         </div>
-        <div
+        {/* <div
           onClick={async () => {
             await quickUpdateHighlight({ ...omit(data, ['books']), frequency: 'never' });
           }}
@@ -108,7 +108,7 @@ function ReviewRandomCards() {
           }}
         >
           surprise
-        </div>
+        </div> */}
 
         {isGettingNext ? (
           <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
