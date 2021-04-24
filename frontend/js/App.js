@@ -6,7 +6,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Memex } from 'pages/Memex';
 import { ReviewEditHighlight } from 'components/EditHighlight';
+
 import ReviewRandomCards from './pages/Review';
 import { BookList } from './pages/Books';
 import { BookDetail } from './pages/BookDetail';
@@ -30,6 +32,9 @@ const App = () => (
           <BookDetail />
         </Route>
       </Switch>
+      <Route path="/memex" exact>
+        <Memex />
+      </Route>
     </Router>
   </QueryClientProvider>
 );

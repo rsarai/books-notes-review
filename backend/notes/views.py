@@ -23,11 +23,11 @@ class ListHighlights(generic.ListView):
 
 
 class ActiveReview(generic.TemplateView):
-    template_name = "active_review.html"
+    template_name = "spa.html"
 
 
 class ActiveDetailView(generic.TemplateView):
-    template_name = "active_review.html"
+    template_name = "spa.html"
 
 
 class BookListView(generic.TemplateView):
