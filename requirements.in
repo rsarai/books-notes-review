@@ -16,3 +16,4 @@ psutil
 ipython
 sentry-sdk
 django-random-queryset
+django-extensions

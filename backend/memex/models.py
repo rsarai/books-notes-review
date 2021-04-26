@@ -6,9 +6,15 @@ from common.models import IndexedTimeStampedModel
 class Provider(IndexedTimeStampedModel):
     name = models.CharField(max_length=255, unique=True, blank=False)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Activity(IndexedTimeStampedModel):
     name = models.CharField(max_length=255, unique=True, blank=False)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class EventLog(IndexedTimeStampedModel):
@@ -24,3 +30,6 @@ class EventLog(IndexedTimeStampedModel):
     command = models.TextField(blank=True)
     website_title = models.TextField(blank=True)
     website_url = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"...{self.acitvity.name} {self.provider.name} at {self.date.date()}"

@@ -45,6 +45,7 @@
     "react-bootstrap": "^1.5.1",
     "react-dom": "~16.13.0",
     "react-hot-loader": "~4.12.3",
+    "react-icons": "^4.2.0",
     "react-query": "^3.9.3",
     "react-router-dom": "^5.2.0",
     "react-toastify": "^7.0.3",

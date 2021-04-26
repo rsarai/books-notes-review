@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_js_reverse",
+    "django_extensions",
     "webpack_loader",
     "import_export",
     "rest_framework",

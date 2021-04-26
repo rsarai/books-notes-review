@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from memex import models
+
+admin.site.register(models.EventLog)
+admin.site.register(models.Provider)
+admin.site.register(models.Activity)

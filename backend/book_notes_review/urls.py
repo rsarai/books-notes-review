@@ -18,7 +18,7 @@ urlpatterns = [
     path("memex/", views.ActiveDetailView.as_view(), name='memex'),
 
     path('api/highlights/', include("notes.endpoints_urls")),
-    path('api/logs/', include("memex.endpoints_urls")),
+    path('api/nodes/', include("memex.endpoints_urls")),
 
     # importer only available to me
     path('api/importer/', endpoints.APIHighlightCreate.as_view()),
